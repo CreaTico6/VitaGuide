@@ -1,0 +1,618 @@
+{
+  "version": 1,
+  "source_file": "TabelaInterações.xlsx",
+  "items": [
+    {
+      "id": "vitamina-a",
+      "name": "Vitamina A",
+      "aliases": [],
+      "type": "suplemento",
+      "interactions_text": "Isotretinoína 1.",
+      "contraindications_text": "Contraindicado: Grávidas no 1º trimestre em doses >3000 UI/dia (teratogénica) 1, 2. Precaução em fumadores (risco de cancro do pulmão com beta-caroteno) 1.",
+      "adverse_text": "Hepatotoxicidade em sobredosagem crónica. Limite (UL): 3000 mcg/dia 1.",
+      "external_entities": [
+        "Isotretinoína"
+      ],
+      "source": {
+        "sheet": "Table 1",
+        "line": 2
+      }
+    },
+    {
+      "id": "vitamina-d",
+      "name": "Vitamina D",
+      "aliases": [],
+      "type": "suplemento",
+      "interactions_text": "",
+      "contraindications_text": "Precaução: Doença Renal Crónica (DRC), sarcoidose, hiperparatiroidismo 3, 4.",
+      "adverse_text": "Hipercalcemia (cálculos renais, arritmias). Limite: 4000 UI/dia 3.",
+      "external_entities": [],
+      "source": {
+        "sheet": "Table 1",
+        "line": 3
+      }
+    },
+    {
+      "id": "vitamina-e",
+      "name": "Vitamina E",
+      "aliases": [],
+      "type": "suplemento",
+      "interactions_text": "Potencia anticoagulantes (ex: varfarina) 3.",
+      "contraindications_text": "Suspender 2 semanas antes de cirurgias. Precaução em doentes anticoagulados 3.",
+      "adverse_text": "Doses altas aumentam risco hemorrágico. Limite: 300 mg/dia 3.",
+      "external_entities": [
+        "Potencia anticoagulantes (ex: varfarina)"
+      ],
+      "source": {
+        "sheet": "Table 1",
+        "line": 4
+      }
+    },
+    {
+      "id": "vitamina-k",
+      "name": "Vitamina K",
+      "aliases": [],
+      "type": "suplemento",
+      "interactions_text": "Antagoniza diretamente a varfarina 3.",
+      "contraindications_text": "Contraindicado: Doentes a tomar varfarina sem monitorização rigorosa 3, 5.",
+      "adverse_text": "Desestabiliza o INR mesmo em pequenas variações 3.",
+      "external_entities": [
+        "Antagoniza diretamente a varfarina"
+      ],
+      "source": {
+        "sheet": "Table 1",
+        "line": 5
+      }
+    },
+    {
+      "id": "vitamina-c",
+      "name": "Vitamina C",
+      "aliases": [],
+      "type": "suplemento",
+      "interactions_text": "",
+      "contraindications_text": "Precaução em litíase renal e hemocromatose 6.",
+      "adverse_text": "Doses altas causam diarreia e cálculos renais. Interfere com testes de glicemia. Limite: 2000 mg/dia 6.",
+      "external_entities": [],
+      "source": {
+        "sheet": "Table 1",
+        "line": 6
+      }
+    },
+    {
+      "id": "vitamina-b6",
+      "name": "Vitamina B6",
+      "aliases": [],
+      "type": "suplemento",
+      "interactions_text": "",
+      "contraindications_text": "Atenção à toma acumulada em \"multivitamínicos para a mulher\" 7.",
+      "adverse_text": "Neuropatia periférica em doses prolongadas >50 mg/dia. Limite: 25 mg/dia 7.",
+      "external_entities": [],
+      "source": {
+        "sheet": "Table 1",
+        "line": 7
+      }
+    },
+    {
+      "id": "vitamina-b12",
+      "name": "Vitamina B12",
+      "aliases": [],
+      "type": "suplemento",
+      "interactions_text": "A metformina reduz a sua absorção 7.",
+      "contraindications_text": "Especialmente recomendada para idosos, vegans e utilizadores de metformina 5, 7.",
+      "adverse_text": "Sem toxicidade conhecida 7.",
+      "external_entities": [
+        "A metformina reduz a sua absorção"
+      ],
+      "source": {
+        "sheet": "Table 1",
+        "line": 8
+      }
+    },
+    {
+      "id": "acido-folico",
+      "name": "Ácido Fólico",
+      "aliases": [],
+      "type": "suplemento",
+      "interactions_text": "Antagoniza o metotrexato 4, 7.",
+      "contraindications_text": "Iniciar 3 meses antes da conceção 8.",
+      "adverse_text": "Doses altas mascaram deficiência de B12. Limite: 1000 mcg/dia 7.",
+      "external_entities": [
+        "Antagoniza o metotrexato"
+      ],
+      "source": {
+        "sheet": "Table 1",
+        "line": 9
+      }
+    },
+    {
+      "id": "niacina-b3",
+      "name": "Niacina (B3)",
+      "aliases": [],
+      "type": "suplemento",
+      "interactions_text": "Risco de miopatia se tomada com estatinas 8.",
+      "contraindications_text": "",
+      "adverse_text": "Hepatotoxicidade e rubor cutâneo. Limite: 10 mg/dia (ácido nicotínico) 8.",
+      "external_entities": [
+        "Risco de miopatia se tomada com estatinas"
+      ],
+      "source": {
+        "sheet": "Table 1",
+        "line": 10
+      }
+    },
+    {
+      "id": "iodo",
+      "name": "Iodo",
+      "aliases": [],
+      "type": "suplemento",
+      "interactions_text": "Amiodarona (risco grave) 9.",
+      "contraindications_text": "Contraindicado: Hipertiroidismo, Doença de Graves, Hashimoto ativa. Precaução em idosos com nódulos tiroideus (risco de Jod-Basedow) 5, 9.",
+      "adverse_text": "Pode causar disfunção tiroideia. Limite: 600 mcg/dia 9.",
+      "external_entities": [
+        "Amiodarona (risco grave)"
+      ],
+      "source": {
+        "sheet": "Table 1",
+        "line": 11
+      }
+    },
+    {
+      "id": "ferro",
+      "name": "Ferro",
+      "aliases": [],
+      "type": "suplemento",
+      "interactions_text": "Separar 2 a 4h de: levotiroxina, quinolonas, tetraciclinas, bifosfonatos 10, 11.",
+      "contraindications_text": "Contraindicado: Hemocromatose. Precaução: Doença Inflamatória Intestinal (DII) ativa (agrava inflamação) 12.",
+      "adverse_text": "Dano cardiovascular se tomado sem deficiência; efeito pró-oxidante 10.",
+      "external_entities": [
+        "Separar  a 4h de: levotiroxina",
+        "quinolonas",
+        "tetraciclinas",
+        "bifosfonatos"
+      ],
+      "source": {
+        "sheet": "Table 1",
+        "line": 12
+      }
+    },
+    {
+      "id": "calcio",
+      "name": "Cálcio",
+      "aliases": [],
+      "type": "suplemento",
+      "interactions_text": "Separar 2 a 4h de: levotiroxina, ferro, bifosfonatos, fluoroquinolonas 11, 13.",
+      "contraindications_text": "Contraindicado: Hipercalcemia. Precaução em litíase renal 10.",
+      "adverse_text": "Doses >1500 mg/dia aumentam o risco cardiovascular 10.",
+      "external_entities": [
+        "Separar  a 4h de: levotiroxina",
+        "ferro",
+        "bifosfonatos",
+        "fluoroquinolonas"
+      ],
+      "source": {
+        "sheet": "Table 1",
+        "line": 13
+      }
+    },
+    {
+      "id": "magnesio",
+      "name": "Magnésio",
+      "aliases": [],
+      "type": "suplemento",
+      "interactions_text": "Reduz absorção de: levotiroxina, bifosfonatos, quinolonas, tetraciclinas 13.",
+      "contraindications_text": "Contraindicado: Doença Renal Crónica (sem supervisão médica) 4, 11.",
+      "adverse_text": "Risco de hipermagnesemia na DRC 11.",
+      "external_entities": [
+        "Reduz absorção de: levotiroxina",
+        "bifosfonatos",
+        "quinolonas",
+        "tetraciclinas"
+      ],
+      "source": {
+        "sheet": "Table 1",
+        "line": 14
+      }
+    },
+    {
+      "id": "zinco",
+      "name": "Zinco",
+      "aliases": [],
+      "type": "suplemento",
+      "interactions_text": "Reduz absorção de ferro não-heme, cobre, levotiroxina, quinolonas, tetraciclinas 13.",
+      "contraindications_text": "Evitar >40 mg/dia por mais de 4 semanas 13.",
+      "adverse_text": "Doses altas causam défice de cobre (anemia e neuropatia). Limite: 25 mg/dia 13.",
+      "external_entities": [
+        "Reduz absorção de ferro não-heme",
+        "cobre",
+        "levotiroxina",
+        "quinolonas",
+        "tetraciclinas"
+      ],
+      "source": {
+        "sheet": "Table 1",
+        "line": 15
+      }
+    },
+    {
+      "id": "selenio",
+      "name": "Selénio",
+      "aliases": [],
+      "type": "suplemento",
+      "interactions_text": "Potencia a varfarina 14.",
+      "contraindications_text": "Precaução em oncologia tiroideia (interfere com iodo radioativo) 14.",
+      "adverse_text": "Selenose crónica (queda de cabelo, neuropatia). Limite: 300 mcg/dia 14.",
+      "external_entities": [
+        "Potencia a varfarina"
+      ],
+      "source": {
+        "sheet": "Table 1",
+        "line": 16
+      }
+    },
+    {
+      "id": "omega-3",
+      "name": "Ómega-3",
+      "aliases": [],
+      "type": "suplemento",
+      "interactions_text": "Potencia varfarina, NOACs e antiplaquetários 15.",
+      "contraindications_text": "Precaução em diabéticos tipo 2 (pode elevar a glicemia de jejum) 15.",
+      "adverse_text": "Doses >3g/dia aumentam tempo de hemorragia 15.",
+      "external_entities": [
+        "Potencia varfarina",
+        "NOACs e antiplaquetários"
+      ],
+      "source": {
+        "sheet": "Table 1",
+        "line": 17
+      }
+    },
+    {
+      "id": "erva-de-sao-joao-hipericao",
+      "name": "Erva-de-são-joão (Hipericão)",
+      "aliases": [],
+      "type": "fitoterapico",
+      "interactions_text": "Antirretrovirais (VIH), ciclosporina, contracetivos orais, digoxina, inibidores do fator Xa, imatinibe, omeprazol, opioides (oxicodona/metadona), varfarina, estatinas, antidepressivos (ISRS, IMAO, tricíclicos), benzodiazepinas, cetamina, clopidogrel, ferro 16-23.",
+      "contraindications_text": "",
+      "adverse_text": "Contraindicado com medicação crónica 24. Reduz drasticamente a eficácia destes fármacos. Causa síndrome serotoninérgica com antidepressivos. Aumenta fotossensibilidade 16, 18, 19, 23, 25.",
+      "external_entities": [
+        "Antirretrovirais (VIH)",
+        "ciclosporina",
+        "contracetivos orais",
+        "digoxina",
+        "inibidores do fator Xa",
+        "imatinibe",
+        "omeprazol",
+        "opioides (oxicodona/metadona)",
+        "varfarina",
+        "estatinas",
+        "antidepressivos (ISRS",
+        "IMAO",
+        "tricíclicos)",
+        "benzodiazepinas",
+        "cetamina",
+        "clopidogrel",
+        "ferro"
+      ],
+      "source": {
+        "sheet": "Table 2",
+        "line": 2
+      }
+    },
+    {
+      "id": "ginkgo-biloba",
+      "name": "Ginkgo Biloba",
+      "aliases": [],
+      "type": "fitoterapico",
+      "interactions_text": "Varfarina, AAS, Clopidogrel (antiplaquetários), AINEs, Antidepressivos (IMAOs), Omeprazol, Anticonvulsivantes (Fenitoína), Atenolol 21, 24-27.",
+      "contraindications_text": "",
+      "adverse_text": "Aumenta o risco hemorrágico severamente 24, 27. Pode causar crises maníacas com antidepressivos 25.",
+      "external_entities": [
+        "Varfarina",
+        "AAS",
+        "Clopidogrel (antiplaquetários)",
+        "AINEs",
+        "Antidepressivos (IMAOs)",
+        "Omeprazol",
+        "Anticonvulsivantes (Fenitoína)",
+        "Atenolol"
+      ],
+      "source": {
+        "sheet": "Table 2",
+        "line": 3
+      }
+    },
+    {
+      "id": "valeriana-passiflora-camomila",
+      "name": "Valeriana, Passiflora, Camomila",
+      "aliases": [],
+      "type": "fitoterapico",
+      "interactions_text": "Sedativos, benzodiazepinas, barbitúricos, analgésicos opioides, álcool 20, 28-30. A camomila interage também com varfarina e ferro 28, 31, 32.",
+      "contraindications_text": "",
+      "adverse_text": "Depressão do Sistema Nervoso Central e excesso de sedação 20, 24, 29, 30. Suspender antes de cirurgias 24.",
+      "external_entities": [
+        "Sedativos",
+        "benzodiazepinas",
+        "barbitúricos",
+        "analgésicos opioides",
+        "álcool",
+        "A camomila interage também com varfarina e ferro"
+      ],
+      "source": {
+        "sheet": "Table 2",
+        "line": 4
+      }
+    },
+    {
+      "id": "ginseng",
+      "name": "Ginseng",
+      "aliases": [],
+      "type": "fitoterapico",
+      "interactions_text": "Hipoglicemiantes, AINEs, Varfarina, Corticoides, Estrogénios, Digoxina, IMAOs, Opioides 25, 27, 33.",
+      "contraindications_text": "",
+      "adverse_text": "Risco de sangramento, hipoglicemia severa, toxicidade por digoxina e agravamento de efeitos adversos hormonais 25, 33.",
+      "external_entities": [
+        "Hipoglicemiantes",
+        "AINEs",
+        "Varfarina",
+        "Corticoides",
+        "Estrogénios",
+        "Digoxina",
+        "IMAOs",
+        "Opioides"
+      ],
+      "source": {
+        "sheet": "Table 2",
+        "line": 5
+      }
+    },
+    {
+      "id": "alho-e-gengibre",
+      "name": "Alho e Gengibre",
+      "aliases": [],
+      "type": "fitoterapico",
+      "interactions_text": "Varfarina, Antiplaquetários, Anti-hipertensores. O Alho reduz inibidores de protease e isoniazida 24, 26, 34.",
+      "contraindications_text": "",
+      "adverse_text": "Aumentam o risco de sangramento e produzem hipotensão aditiva 24, 26, 34.",
+      "external_entities": [
+        "Varfarina",
+        "Antiplaquetários",
+        "Anti-hipertensores. O Alho reduz inibidores de protease e isoniazida"
+      ],
+      "source": {
+        "sheet": "Table 2",
+        "line": 6
+      }
+    },
+    {
+      "id": "alcacuz-glycyrrhiza-glabra",
+      "name": "Alcaçuz (Glycyrrhiza Glabra)",
+      "aliases": [],
+      "type": "fitoterapico",
+      "interactions_text": "Anti-hipertensores, Quimioterapia (paclitaxel, cisplatina), Corticoides, Digoxina, Diuréticos, IMAOs, Anticoncecionais 35-37.",
+      "contraindications_text": "",
+      "adverse_text": "Anula anti-hipertensores (retenção de líquidos). Risco de toxicidade por digoxina (baixa potássio) 35, 36.",
+      "external_entities": [
+        "Anti-hipertensores",
+        "Quimioterapia (paclitaxel",
+        "cisplatina)",
+        "Corticoides",
+        "Digoxina",
+        "Diuréticos",
+        "IMAOs",
+        "Anticoncecionais"
+      ],
+      "source": {
+        "sheet": "Table 2",
+        "line": 7
+      }
+    },
+    {
+      "id": "equinacea-e-astragalo",
+      "name": "Equinácea e Astrágalo",
+      "aliases": [],
+      "type": "fitoterapico",
+      "interactions_text": "Imunossupressores (ciclosporina, tacrolimo) 24, 38, 39.",
+      "contraindications_text": "",
+      "adverse_text": "Contraindicados em doenças autoimunes ou transplantados 4, 24. Reduzem a eficácia de imunossupressores 24, 39.",
+      "external_entities": [
+        "Imunossupressores (ciclosporina",
+        "tacrolimo)"
+      ],
+      "source": {
+        "sheet": "Table 2",
+        "line": 8
+      }
+    },
+    {
+      "id": "kava-kava",
+      "name": "Kava-kava",
+      "aliases": [],
+      "type": "fitoterapico",
+      "interactions_text": "Benzodiazepinas, antiparkinsonianos (levodopa), fármacos hepatotóxicos 35, 40, 41.",
+      "contraindications_text": "",
+      "adverse_text": "Proibido / Contraindicado devido a hepatotoxicidade grave e indução de semicoma 24, 35, 41.",
+      "external_entities": [
+        "Benzodiazepinas",
+        "antiparkinsonianos (levodopa)",
+        "fármacos hepatotóxicos"
+      ],
+      "source": {
+        "sheet": "Table 2",
+        "line": 9
+      }
+    },
+    {
+      "id": "cha-verde-extrato-concentrado",
+      "name": "Chá Verde (extrato concentrado)",
+      "aliases": [],
+      "type": "fitoterapico",
+      "interactions_text": "Varfarina, Atorvastatina, Nadolol 40, 42, 43.",
+      "contraindications_text": "",
+      "adverse_text": "Hepatotoxicidade em doses altas (>800 mg de EGCG). Corta efeito de estatinas 42, 43.",
+      "external_entities": [
+        "Varfarina",
+        "Atorvastatina",
+        "Nadolol"
+      ],
+      "source": {
+        "sheet": "Table 2",
+        "line": 10
+      }
+    },
+    {
+      "id": "efedra",
+      "name": "Efedra",
+      "aliases": [],
+      "type": "fitoterapico",
+      "interactions_text": "Estimulantes (cafeína), IMAOs 43-45.",
+      "contraindications_text": "",
+      "adverse_text": "Proibido na UE/EUA. Risco de arritmias e AVC 43, 45.",
+      "external_entities": [
+        "Estimulantes (cafeína)",
+        "IMAOs"
+      ],
+      "source": {
+        "sheet": "Table 2",
+        "line": 11
+      }
+    },
+    {
+      "id": "cardo-mariano-alcachofra",
+      "name": "Cardo-mariano / Alcachofra",
+      "aliases": [],
+      "type": "fitoterapico",
+      "interactions_text": "Hipoglicemiantes, indinavir, sirolimo, varfarina 46, 47.",
+      "contraindications_text": "",
+      "adverse_text": "Precaução na colelitíase. Sangramento e hipoglicemia 43, 46, 47.",
+      "external_entities": [
+        "Hipoglicemiantes",
+        "indinavir",
+        "sirolimo",
+        "varfarina"
+      ],
+      "source": {
+        "sheet": "Table 2",
+        "line": 12
+      }
+    },
+    {
+      "id": "melatonina",
+      "name": "Melatonina",
+      "aliases": [],
+      "type": "fitoterapico",
+      "interactions_text": "Anticoagulantes, anticonvulsivantes, benzodiazepinas 46.",
+      "contraindications_text": "",
+      "adverse_text": "Diminui efeito de anticonvulsivantes. Risco de sangramento e muita sedação 46.",
+      "external_entities": [
+        "Anticoagulantes",
+        "anticonvulsivantes",
+        "benzodiazepinas"
+      ],
+      "source": {
+        "sheet": "Table 2",
+        "line": 13
+      }
+    },
+    {
+      "id": "ashwagandha",
+      "name": "Ashwagandha",
+      "aliases": [],
+      "type": "fitoterapico",
+      "interactions_text": "Imunossupressores, sedativos, anti-hipertensores, hormonas tiroideias, hipoglicemiantes 38.",
+      "contraindications_text": "",
+      "adverse_text": "Aumenta hormonas tiroideias. Sedação excessiva 38.",
+      "external_entities": [
+        "Imunossupressores",
+        "sedativos",
+        "anti-hipertensores",
+        "hormonas tiroideias",
+        "hipoglicemiantes"
+      ],
+      "source": {
+        "sheet": "Table 2",
+        "line": 14
+      }
+    }
+  ],
+  "external_catalog": [
+    "A camomila interage também com varfarina e ferro",
+    "A metformina reduz a sua absorção",
+    "AAS",
+    "AINEs",
+    "Amiodarona (risco grave)",
+    "analgésicos opioides",
+    "Antagoniza diretamente a varfarina",
+    "Antagoniza o metotrexato",
+    "anti-hipertensores",
+    "Anti-hipertensores",
+    "Anti-hipertensores. O Alho reduz inibidores de protease e isoniazida",
+    "Anticoagulantes",
+    "Anticoncecionais",
+    "anticonvulsivantes",
+    "Anticonvulsivantes (Fenitoína)",
+    "Antidepressivos (IMAOs)",
+    "antidepressivos (ISRS",
+    "antiparkinsonianos (levodopa)",
+    "Antiplaquetários",
+    "Antirretrovirais (VIH)",
+    "Atenolol",
+    "Atorvastatina",
+    "barbitúricos",
+    "benzodiazepinas",
+    "Benzodiazepinas",
+    "bifosfonatos",
+    "cetamina",
+    "ciclosporina",
+    "cisplatina)",
+    "clopidogrel",
+    "Clopidogrel (antiplaquetários)",
+    "cobre",
+    "contracetivos orais",
+    "Corticoides",
+    "Digoxina",
+    "digoxina",
+    "Diuréticos",
+    "estatinas",
+    "Estimulantes (cafeína)",
+    "Estrogénios",
+    "ferro",
+    "fluoroquinolonas",
+    "fármacos hepatotóxicos",
+    "hipoglicemiantes",
+    "Hipoglicemiantes",
+    "hormonas tiroideias",
+    "IMAO",
+    "IMAOs",
+    "imatinibe",
+    "Imunossupressores",
+    "Imunossupressores (ciclosporina",
+    "indinavir",
+    "inibidores do fator Xa",
+    "Isotretinoína",
+    "levotiroxina",
+    "Nadolol",
+    "NOACs e antiplaquetários",
+    "omeprazol",
+    "Omeprazol",
+    "Opioides",
+    "opioides (oxicodona/metadona)",
+    "Potencia a varfarina",
+    "Potencia anticoagulantes (ex: varfarina)",
+    "Potencia varfarina",
+    "Quimioterapia (paclitaxel",
+    "quinolonas",
+    "Reduz absorção de ferro não-heme",
+    "Reduz absorção de: levotiroxina",
+    "Risco de miopatia se tomada com estatinas",
+    "sedativos",
+    "Sedativos",
+    "Separar  a 4h de: levotiroxina",
+    "sirolimo",
+    "tacrolimo)",
+    "tetraciclinas",
+    "tricíclicos)",
+    "Varfarina",
+    "varfarina",
+    "álcool"
+  ]
+}
