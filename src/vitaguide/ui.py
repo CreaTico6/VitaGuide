@@ -10,6 +10,72 @@ from .engine import analyze
 from .pdf_export import export_analysis_to_pdf
 
 
+class ScrollableCheckboxFrame(tk.Frame):
+    """A scrollable frame containing checkboxes."""
+    
+    def __init__(self, parent: tk.Widget, items: list[str], **kwargs) -> None:
+        super().__init__(parent, **kwargs)
+        
+        self.items = items
+        self.var_dict: dict[str, tk.BooleanVar] = {}
+        self.checkbox_widgets: dict[str, tk.Checkbutton] = {}
+        
+        # Create canvas and scrollbar
+        self.canvas = tk.Canvas(self, highlightthickness=0)
+        self.scrollbar = tk.Scrollbar(self, orient=tk.VERTICAL, command=self.canvas.yview)
+        self.scrollable_frame = tk.Frame(self.canvas)
+        
+        self.scrollable_frame.bind(
+            "<Configure>",
+            lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+        )
+        
+        self.canvas.create_window((0, 0), window=self.scrollable_frame, anchor="nw")
+        self.canvas.configure(yscrollcommand=self.scrollbar.set)
+        
+        # Pack canvas and scrollbar
+        self.canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        self.scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        
+        # Bind mouse wheel to scrollbar
+        self.canvas.bind("<MouseWheel>", self._on_mousewheel)
+        self.canvas.bind("<Button-4>", self._on_mousewheel)
+        self.canvas.bind("<Button-5>", self._on_mousewheel)
+        
+        self._populate_checkboxes(items)
+    
+    def _on_mousewheel(self, event) -> None:
+        if event.num == 5 or event.delta < 0:
+            self.canvas.yview_scroll(1, "units")
+        elif event.num == 4 or event.delta > 0:
+            self.canvas.yview_scroll(-1, "units")
+    
+    def _populate_checkboxes(self, items: list[str]) -> None:
+        for item in items:
+            var = tk.BooleanVar()
+            self.var_dict[item] = var
+            cb = tk.Checkbutton(self.scrollable_frame, text=item, variable=var)
+            cb.pack(anchor="w")
+            self.checkbox_widgets[item] = cb
+    
+    def set_items(self, items: list[str]) -> None:
+        """Update the list of items and refresh checkboxes."""
+        for widget in self.scrollable_frame.winfo_children():
+            widget.destroy()
+        self.var_dict.clear()
+        self.checkbox_widgets.clear()
+        self._populate_checkboxes(items)
+    
+    def get_selected(self) -> list[str]:
+        """Return list of selected items."""
+        return [item for item, var in self.var_dict.items() if var.get()]
+    
+    def clear_selection(self) -> None:
+        """Clear all selections."""
+        for var in self.var_dict.values():
+            var.set(False)
+
+
 class VitaGuideApp:
     def __init__(self, root: tk.Tk, dataset_path: Path) -> None:
         self.root = root
@@ -21,7 +87,6 @@ class VitaGuideApp:
         self.last_result = None
 
         self.supplement_names = sorted([item["name"] for item in self.dataset.get("items", [])], key=str.lower)
-        self.external_catalog = sorted(self.dataset.get("external_catalog", []), key=str.lower)
 
         self._build_ui()
 
@@ -36,33 +101,30 @@ class VitaGuideApp:
         container.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
         left = tk.Frame(container, width=420)
-        left.pack(side=tk.LEFT, fill=tk.Y)
+        left.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(0, 10))
 
         right = tk.Frame(container)
         right.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
-        tk.Label(left, text="Suplementos (multiselecao)", font=("Segoe UI", 10, "bold")).pack(anchor="w")
+        # Supplements with checkboxes
+        tk.Label(left, text="Suplementos", font=("Segoe UI", 10, "bold")).pack(anchor="w")
         self.supp_filter_var = tk.StringVar()
         self.supp_filter_var.trace_add("write", self._refresh_supplement_list)
         tk.Entry(left, textvariable=self.supp_filter_var).pack(fill=tk.X, pady=(2, 5))
 
-        self.supp_list = tk.Listbox(left, selectmode=tk.EXTENDED, height=18, exportselection=False)
-        self.supp_list.pack(fill=tk.X)
+        checkbox_frame = tk.Frame(left, height=250)
+        checkbox_frame.pack(fill=tk.BOTH, expand=True, pady=(0, 8))
+        
+        self.supp_checkbox_frame = ScrollableCheckboxFrame(checkbox_frame, self.supplement_names)
+        self.supp_checkbox_frame.pack(fill=tk.BOTH, expand=True)
 
-        tk.Label(left, text="Externos pre-definidos (medicamentos/condicoes)", font=("Segoe UI", 10, "bold")).pack(anchor="w", pady=(12, 0))
-        self.ext_filter_var = tk.StringVar()
-        self.ext_filter_var.trace_add("write", self._refresh_external_list)
-        tk.Entry(left, textvariable=self.ext_filter_var).pack(fill=tk.X, pady=(2, 5))
-
-        self.ext_list = tk.Listbox(left, selectmode=tk.EXTENDED, height=12, exportselection=False)
-        self.ext_list.pack(fill=tk.X)
-
-        tk.Label(left, text="Externos em texto livre (separados por virgula)").pack(anchor="w", pady=(12, 0))
+        # Free-text externals only
+        tk.Label(left, text="Externos em texto livre (separados por virgula)", font=("Segoe UI", 10, "bold")).pack(anchor="w", pady=(8, 0))
         self.free_text = tk.Entry(left)
         self.free_text.pack(fill=tk.X, pady=(2, 8))
 
         button_row = tk.Frame(left)
-        button_row.pack(fill=tk.X, pady=(8, 0))
+        button_row.pack(fill=tk.X, pady=(0, 0))
         tk.Button(button_row, text="Analisar", command=self._run_analysis).pack(side=tk.LEFT)
         tk.Button(button_row, text="Exportar PDF", command=self._export_pdf).pack(side=tk.LEFT, padx=8)
 
@@ -70,38 +132,23 @@ class VitaGuideApp:
         self.output = ScrolledText(right, wrap=tk.WORD)
         self.output.pack(fill=tk.BOTH, expand=True, pady=(4, 0))
 
-        self._refresh_supplement_list()
-        self._refresh_external_list()
-
     def _refresh_supplement_list(self, *_args) -> None:
         filter_value = self.supp_filter_var.get().strip().lower()
-        self.supp_list.delete(0, tk.END)
+        filtered_items = []
         for name in self.supplement_names:
-            if filter_value and filter_value not in name.lower():
-                continue
-            self.supp_list.insert(tk.END, name)
-
-    def _refresh_external_list(self, *_args) -> None:
-        filter_value = self.ext_filter_var.get().strip().lower()
-        self.ext_list.delete(0, tk.END)
-        for name in self.external_catalog:
-            if filter_value and filter_value not in name.lower():
-                continue
-            self.ext_list.insert(tk.END, name)
-
-    def _selected_values(self, listbox: tk.Listbox) -> list[str]:
-        return [listbox.get(i) for i in listbox.curselection()]
+            if not filter_value or filter_value in name.lower():
+                filtered_items.append(name)
+        self.supp_checkbox_frame.set_items(filtered_items)
 
     def _run_analysis(self) -> None:
-        selected_supp = self._selected_values(self.supp_list)
+        selected_supp = self.supp_checkbox_frame.get_selected()
         if not selected_supp:
             messagebox.showwarning("VitaGuide", "Selecione pelo menos um suplemento.")
             return
 
-        selected_external = self._selected_values(self.ext_list)
         free_text = self.free_text.get().strip()
 
-        result = analyze(self.dataset, selected_supp, selected_external, free_text)
+        result = analyze(self.dataset, selected_supp, [], free_text)
         self.last_result = result
         self._render_result(result)
 
