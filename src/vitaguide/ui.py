@@ -10,19 +10,64 @@ from .engine import analyze
 from .pdf_export import export_analysis_to_pdf
 
 
+class ScrollableCheckboxFrame(tk.Frame):
+    def __init__(self, master: tk.Misc, *, height: int = 320) -> None:
+        super().__init__(master)
+        self._selected: set[str] = set()
+        self._variables: dict[str, tk.BooleanVar] = {}
+
+        self.canvas = tk.Canvas(self, height=height, highlightthickness=0)
+        self.scrollbar = tk.Scrollbar(self, orient=tk.VERTICAL, command=self.canvas.yview)
+        self.inner = tk.Frame(self.canvas)
+        self.inner.bind("<Configure>", self._on_configure)
+
+        self.canvas.create_window((0, 0), window=self.inner, anchor="nw")
+        self.canvas.configure(yscrollcommand=self.scrollbar.set)
+        self.canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        self.scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
+    def _on_configure(self, _event: tk.Event) -> None:
+        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+
+    def set_items(self, names: list[str]) -> None:
+        for widget in self.inner.winfo_children():
+            widget.destroy()
+        self._variables.clear()
+
+        for name in names:
+            var = tk.BooleanVar(value=name in self._selected)
+            self._variables[name] = var
+            tk.Checkbutton(
+                self.inner,
+                text=name,
+                variable=var,
+                anchor="w",
+                command=lambda n=name, v=var: self._toggle(n, v.get()),
+            ).pack(fill=tk.X, anchor="w")
+
+    def _toggle(self, name: str, selected: bool) -> None:
+        if selected:
+            self._selected.add(name)
+        else:
+            self._selected.discard(name)
+
+    def selected_values(self) -> list[str]:
+        for name, var in self._variables.items():
+            self._toggle(name, var.get())
+        return sorted(self._selected, key=str.lower)
+
+
 class VitaGuideApp:
     def __init__(self, root: tk.Tk, dataset_path: Path) -> None:
         self.root = root
         self.root.title("VitaGuide")
-        self.root.geometry("1200x760")
+        self.root.geometry("980x680")
 
         self.dataset_path = dataset_path
         self.dataset = self._load_dataset()
         self.last_result = None
 
         self.supplement_names = sorted([item["name"] for item in self.dataset.get("items", [])], key=str.lower)
-        self.external_catalog = sorted(self.dataset.get("external_catalog", []), key=str.lower)
-
         self._build_ui()
 
     def _load_dataset(self) -> dict:
@@ -35,7 +80,7 @@ class VitaGuideApp:
         container = tk.Frame(self.root)
         container.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
-        left = tk.Frame(container, width=420)
+        left = tk.Frame(container, width=360)
         left.pack(side=tk.LEFT, fill=tk.Y)
 
         right = tk.Frame(container)
@@ -46,16 +91,8 @@ class VitaGuideApp:
         self.supp_filter_var.trace_add("write", self._refresh_supplement_list)
         tk.Entry(left, textvariable=self.supp_filter_var).pack(fill=tk.X, pady=(2, 5))
 
-        self.supp_list = tk.Listbox(left, selectmode=tk.EXTENDED, height=18, exportselection=False)
-        self.supp_list.pack(fill=tk.X)
-
-        tk.Label(left, text="Externos pre-definidos (medicamentos/condicoes)", font=("Segoe UI", 10, "bold")).pack(anchor="w", pady=(12, 0))
-        self.ext_filter_var = tk.StringVar()
-        self.ext_filter_var.trace_add("write", self._refresh_external_list)
-        tk.Entry(left, textvariable=self.ext_filter_var).pack(fill=tk.X, pady=(2, 5))
-
-        self.ext_list = tk.Listbox(left, selectmode=tk.EXTENDED, height=12, exportselection=False)
-        self.ext_list.pack(fill=tk.X)
+        self.supp_checkboxes = ScrollableCheckboxFrame(left, height=300)
+        self.supp_checkboxes.pack(fill=tk.X)
 
         tk.Label(left, text="Externos em texto livre (separados por virgula)").pack(anchor="w", pady=(12, 0))
         self.free_text = tk.Entry(left)
@@ -71,37 +108,25 @@ class VitaGuideApp:
         self.output.pack(fill=tk.BOTH, expand=True, pady=(4, 0))
 
         self._refresh_supplement_list()
-        self._refresh_external_list()
 
     def _refresh_supplement_list(self, *_args) -> None:
         filter_value = self.supp_filter_var.get().strip().lower()
-        self.supp_list.delete(0, tk.END)
+        filtered_names = []
         for name in self.supplement_names:
             if filter_value and filter_value not in name.lower():
                 continue
-            self.supp_list.insert(tk.END, name)
-
-    def _refresh_external_list(self, *_args) -> None:
-        filter_value = self.ext_filter_var.get().strip().lower()
-        self.ext_list.delete(0, tk.END)
-        for name in self.external_catalog:
-            if filter_value and filter_value not in name.lower():
-                continue
-            self.ext_list.insert(tk.END, name)
-
-    def _selected_values(self, listbox: tk.Listbox) -> list[str]:
-        return [listbox.get(i) for i in listbox.curselection()]
+            filtered_names.append(name)
+        self.supp_checkboxes.set_items(filtered_names)
 
     def _run_analysis(self) -> None:
-        selected_supp = self._selected_values(self.supp_list)
+        selected_supp = self.supp_checkboxes.selected_values()
         if not selected_supp:
             messagebox.showwarning("VitaGuide", "Selecione pelo menos um suplemento.")
             return
 
-        selected_external = self._selected_values(self.ext_list)
         free_text = self.free_text.get().strip()
 
-        result = analyze(self.dataset, selected_supp, selected_external, free_text)
+        result = analyze(self.dataset, selected_supp, [], free_text)
         self.last_result = result
         self._render_result(result)
 
