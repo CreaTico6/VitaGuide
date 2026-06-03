@@ -15,15 +15,16 @@ class ScrollableCheckboxFrame(tk.Frame):
     
     def __init__(self, parent: tk.Widget, items: list[str], **kwargs) -> None:
         super().__init__(parent, **kwargs)
+        bg_color = kwargs.get("bg", self.cget("bg"))
         
         self.items = items
         self.var_dict: dict[str, tk.BooleanVar] = {}
         self.checkbox_widgets: dict[str, tk.Checkbutton] = {}
         
         # Create canvas and scrollbar
-        self.canvas = tk.Canvas(self, highlightthickness=0)
+        self.canvas = tk.Canvas(self, highlightthickness=0, bg=bg_color)
         self.scrollbar = tk.Scrollbar(self, orient=tk.VERTICAL, command=self.canvas.yview)
-        self.scrollable_frame = tk.Frame(self.canvas)
+        self.scrollable_frame = tk.Frame(self.canvas, bg=bg_color)
         
         self.scrollable_frame.bind(
             "<Configure>",
@@ -55,7 +56,14 @@ class ScrollableCheckboxFrame(tk.Frame):
         for item in items:
             var = tk.BooleanVar(value=item in selected_items)
             self.var_dict[item] = var
-            cb = tk.Checkbutton(self.scrollable_frame, text=item, variable=var)
+            cb = tk.Checkbutton(
+                self.scrollable_frame,
+                text=item,
+                variable=var,
+                bg=self.scrollable_frame.cget("bg"),
+                activebackground=self.scrollable_frame.cget("bg"),
+                selectcolor="#dce4f5",
+            )
             cb.pack(anchor="w")
             self.checkbox_widgets[item] = cb
     
@@ -83,6 +91,7 @@ class VitaGuideApp:
         self.root.title("VitaGuide")
         self.root.geometry("1020x640")
         self.root.minsize(920, 560)
+        self.root.configure(bg="#eef2f8")
 
         self.dataset_path = dataset_path
         self.dataset = self._load_dataset()
@@ -100,64 +109,92 @@ class VitaGuideApp:
             return json.load(f)
 
     def _build_ui(self) -> None:
-        header = tk.Frame(self.root)
-        header.pack(fill=tk.X, padx=12, pady=(10, 0))
-        tk.Label(header, text="VitaGuide", font=("Segoe UI", 15, "bold")).pack(side=tk.LEFT)
-        tk.Label(header, text="by TiSoft", font=("Segoe UI", 10), fg="#5b6470").pack(side=tk.LEFT, padx=(8, 0), pady=(3, 0))
+        # Subtle professional palette with light neutrals and a restrained accent color.
+        colors = {
+            "page_bg": "#eef2f8",
+            "card_bg": "#ffffff",
+            "header_bg": "#2f4b7c",
+            "header_fg": "#ffffff",
+            "header_subtle_fg": "#d7e2f4",
+            "text_main": "#1e293b",
+            "text_subtle": "#5b6470",
+            "entry_bg": "#f8faff",
+            "button_bg": "#3b5c96",
+            "button_fg": "#ffffff",
+        }
 
-        container = tk.Frame(self.root)
+        header = tk.Frame(self.root, bg=colors["header_bg"])
+        header.pack(fill=tk.X, padx=12, pady=(10, 0))
+        tk.Label(
+            header,
+            text="VitaGuide",
+            font=("Segoe UI", 15, "bold"),
+            bg=colors["header_bg"],
+            fg=colors["header_fg"],
+        ).pack(side=tk.LEFT, padx=(10, 0), pady=8)
+        # Keep registered trademark symbol before TiSoft as requested.
+        tk.Label(
+            header,
+            text="by ® TiSoft",
+            font=("Segoe UI", 10),
+            bg=colors["header_bg"],
+            fg=colors["header_subtle_fg"],
+        ).pack(side=tk.LEFT, padx=(8, 0), pady=(10, 0))
+
+        container = tk.Frame(self.root, bg=colors["page_bg"])
         container.pack(fill=tk.BOTH, expand=True, padx=12, pady=10)
 
-        left = tk.Frame(container, width=380)
+        left = tk.Frame(container, width=380, bg=colors["card_bg"], bd=1, relief=tk.SOLID)
         left.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(0, 10))
 
-        right = tk.Frame(container)
+        right = tk.Frame(container, bg=colors["card_bg"], bd=1, relief=tk.SOLID)
         right.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
         # Supplements with checkboxes
-        tk.Label(left, text="Suplementos", font=("Segoe UI", 10, "bold")).pack(anchor="w")
+        tk.Label(left, text="Suplementos", font=("Segoe UI", 10, "bold"), bg=colors["card_bg"], fg=colors["text_main"]).pack(anchor="w", padx=8, pady=(8, 0))
         self.supp_filter_var = tk.StringVar()
         self.supp_filter_var.trace_add("write", self._refresh_supplement_list)
-        tk.Entry(left, textvariable=self.supp_filter_var).pack(fill=tk.X, pady=(2, 5))
+        tk.Entry(left, textvariable=self.supp_filter_var, bg=colors["entry_bg"], relief=tk.GROOVE).pack(fill=tk.X, padx=8, pady=(2, 5))
 
-        checkbox_frame = tk.Frame(left, height=170)
-        checkbox_frame.pack(fill=tk.X, pady=(0, 8))
+        checkbox_frame = tk.Frame(left, height=170, bg=colors["card_bg"])
+        checkbox_frame.pack(fill=tk.X, padx=8, pady=(0, 8))
         checkbox_frame.pack_propagate(False)
         
-        self.supp_checkbox_frame = ScrollableCheckboxFrame(checkbox_frame, self.supplement_names)
+        self.supp_checkbox_frame = ScrollableCheckboxFrame(checkbox_frame, self.supplement_names, bg=colors["card_bg"])
         self.supp_checkbox_frame.pack(fill=tk.BOTH, expand=True)
 
-        tk.Label(left, text="Externos (catalogo)", font=("Segoe UI", 10, "bold")).pack(anchor="w", pady=(2, 0))
+        tk.Label(left, text="Externos (catalogo)", font=("Segoe UI", 10, "bold"), bg=colors["card_bg"], fg=colors["text_main"]).pack(anchor="w", padx=8, pady=(2, 0))
         self.external_filter_var = tk.StringVar()
         self.external_filter_var.trace_add("write", self._refresh_external_list)
-        tk.Entry(left, textvariable=self.external_filter_var).pack(fill=tk.X, pady=(2, 5))
+        tk.Entry(left, textvariable=self.external_filter_var, bg=colors["entry_bg"], relief=tk.GROOVE).pack(fill=tk.X, padx=8, pady=(2, 5))
 
-        external_checkbox_frame = tk.Frame(left, height=130)
-        external_checkbox_frame.pack(fill=tk.X, pady=(0, 8))
+        external_checkbox_frame = tk.Frame(left, height=130, bg=colors["card_bg"])
+        external_checkbox_frame.pack(fill=tk.X, padx=8, pady=(0, 8))
         external_checkbox_frame.pack_propagate(False)
 
-        self.external_checkbox_frame = ScrollableCheckboxFrame(external_checkbox_frame, self.external_names)
+        self.external_checkbox_frame = ScrollableCheckboxFrame(external_checkbox_frame, self.external_names, bg=colors["card_bg"])
         self.external_checkbox_frame.pack(fill=tk.BOTH, expand=True)
 
-        tk.Label(left, text="Externos em texto livre", font=("Segoe UI", 10, "bold")).pack(anchor="w", pady=(2, 0))
+        tk.Label(left, text="Externos em texto livre", font=("Segoe UI", 10, "bold"), bg=colors["card_bg"], fg=colors["text_main"]).pack(anchor="w", padx=8, pady=(2, 0))
         tk.Label(
             left,
             text="Insira termos livres (1 por linha ou separados por virgula/;).",
             font=("Segoe UI", 8),
-            fg="#5b6470",
-        ).pack(anchor="w", pady=(1, 2))
-        self.free_text = ScrolledText(left, wrap=tk.WORD, height=4)
-        self.free_text.pack(fill=tk.X, pady=(0, 8))
+            fg=colors["text_subtle"],
+            bg=colors["card_bg"],
+        ).pack(anchor="w", padx=8, pady=(1, 2))
+        self.free_text = ScrolledText(left, wrap=tk.WORD, height=4, bg=colors["entry_bg"], relief=tk.GROOVE)
+        self.free_text.pack(fill=tk.X, padx=8, pady=(0, 8))
 
-        button_row = tk.Frame(left)
-        button_row.pack(fill=tk.X, pady=(0, 0))
-        tk.Button(button_row, text="Analisar", command=self._run_analysis).pack(side=tk.LEFT)
-        tk.Button(button_row, text="Exportar PDF", command=self._export_pdf).pack(side=tk.LEFT, padx=8)
-        tk.Button(button_row, text="Limpar externos", command=self._clear_externals).pack(side=tk.LEFT)
+        button_row = tk.Frame(left, bg=colors["card_bg"])
+        button_row.pack(fill=tk.X, padx=8, pady=(0, 8))
+        tk.Button(button_row, text="Analisar", command=self._run_analysis, bg=colors["button_bg"], fg=colors["button_fg"], relief=tk.FLAT).pack(side=tk.LEFT)
+        tk.Button(button_row, text="Exportar PDF", command=self._export_pdf, bg=colors["button_bg"], fg=colors["button_fg"], relief=tk.FLAT).pack(side=tk.LEFT, padx=8)
+        tk.Button(button_row, text="Limpar externos", command=self._clear_externals, bg=colors["button_bg"], fg=colors["button_fg"], relief=tk.FLAT).pack(side=tk.LEFT)
 
-        tk.Label(right, text="Resultados", font=("Segoe UI", 11, "bold")).pack(anchor="w")
-        self.output = ScrolledText(right, wrap=tk.WORD)
-        self.output.pack(fill=tk.BOTH, expand=True, pady=(4, 0))
+        tk.Label(right, text="Resultados", font=("Segoe UI", 11, "bold"), bg=colors["card_bg"], fg=colors["text_main"]).pack(anchor="w", padx=8, pady=(8, 0))
+        self.output = ScrolledText(right, wrap=tk.WORD, bg=colors["entry_bg"], relief=tk.GROOVE)
+        self.output.pack(fill=tk.BOTH, expand=True, padx=8, pady=(4, 8))
 
     def _refresh_supplement_list(self, *_args) -> None:
         filter_value = self.supp_filter_var.get().strip().lower()
